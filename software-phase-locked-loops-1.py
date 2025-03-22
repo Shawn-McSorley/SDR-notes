@@ -27,7 +27,26 @@ f1, Pxx1 = signal.welch(carrier, fs, nperseg=nperseg1, scaling='spectrum')
 f2, Pxx2 = signal.welch(carrier, fs, nperseg=nperseg2, scaling='spectrum')
 f3, Pxx3 = signal.welch(carrier, fs, nperseg=nperseg3, scaling='spectrum')
 
-plt.figure()
+plt.figure(figsize=(10, 8))
+plt.plot(f1, Pxx1, label='nperseg = 2**10')
+plt.plot(f2, Pxx2, label='nperseg = 2**12')
+plt.plot(f3, Pxx3, label='nperseg = 2**14')
+plt.legend()
+plt.yscale('log')
+plt.xlabel('Frequency [Hz]')
+plt.ylabel('Power Spectrum [V**2]')
+plt.xlim([fc-5e3, fc+5e3])
+plt.savefig('Shawn-McSorley.github.io/assets/carrier_power_spectrum.png', dpi=200, transparent=True)
+
+# calculate and plot power spectral density
+nperseg1 = 2**10
+nperseg2 = 2**12
+nperseg3 = 2**14
+f1, Pxx1 = signal.welch(carrier, fs, nperseg=nperseg1)
+f2, Pxx2 = signal.welch(carrier, fs, nperseg=nperseg2)
+f3, Pxx3 = signal.welch(carrier, fs, nperseg=nperseg3)
+
+plt.figure(figsize=(10, 8))
 plt.plot(f1, Pxx1, label='nperseg = 2**10')
 plt.plot(f2, Pxx2, label='nperseg = 2**12')
 plt.plot(f3, Pxx3, label='nperseg = 2**14')
@@ -36,6 +55,8 @@ plt.yscale('log')
 plt.xlabel('Frequency [Hz]')
 plt.ylabel('Power Spectrum [V**2/Hz]')
 plt.xlim([fc-5e3, fc+5e3])
+plt.savefig('Shawn-McSorley.github.io/assets/carrier_power_density.png', dpi=200, transparent=True)
+plt.show()
 
 # generate analytic signal
 analytic_signal = signal.hilbert(carrier)
